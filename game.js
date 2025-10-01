@@ -1,19 +1,41 @@
-const canvas = document.getElementById("gameCanvas");
-const ctx = canvas.getContext("2d");
+const canvas = document.createElement('canvas');
+const ctx = canvas.getContext('2d');
+document.body.appendChild(canvas);
 
-function loop() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  // วาดพื้นหลังชั่วคราว
-  ctx.fillStyle = "#0b1737";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+canvas.width = 640;
+canvas.height = 480;
 
-  // วาดข้อความทดสอบ
-  ctx.fillStyle = "#e8eef6";
-  ctx.font = "20px sans-serif";
-  ctx.fillText("RPG Portfolio Prototype", 50, 50);
+document.body.style.margin = '0';
+document.body.style.backgroundColor = '#0f1126';
 
-  requestAnimationFrame(loop);
+const hero = {
+  x: 300,
+  y: 220,
+  width: 32,
+  height: 32,
+  speed: 2,
+  image: new Image(),
+};
+
+hero.image.src = 'assets/hero.png'; // โหลดรูปจาก assets
+
+const keys = {};
+
+document.addEventListener('keydown', (e) => {
+  keys[e.key] = true;
+});
+
+document.addEventListener('keyup', (e) => {
+  keys[e.key] = false;
+});
+
+function update() {
+  if (keys['ArrowUp']) hero.y -= hero.speed;
+  if (keys['ArrowDown']) hero.y += hero.speed;
+  if (keys['ArrowLeft']) hero.x -= hero.speed;
+  if (keys['ArrowRight']) hero.x += hero.speed;
 }
 
-// เริ่ม loop
-loop();
+function draw() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.drawImage(he
