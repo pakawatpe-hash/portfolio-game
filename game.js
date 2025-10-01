@@ -36,10 +36,11 @@ document.addEventListener('keyup', (e) => {
 
 // อัปเดตตำแหน่ง
 function update() {
-  if (keys['ArrowUp']) hero.y -= hero.speed;
-  if (keys['ArrowDown']) hero.y += hero.speed;
-  if (keys['ArrowLeft']) hero.x -= hero.speed;
-  if (keys['ArrowRight']) hero.x += hero.speed;
+  if (keys['w'] || keys['W']) hero.y -= hero.speed;
+  if (keys['s'] || keys['S']) hero.y += hero.speed;
+  if (keys['a'] || keys['A']) hero.x -= hero.speed;
+  if (keys['d'] || keys['D']) hero.x += hero.speed;
+
 }
 
 // วาดลงจอ
