@@ -17,7 +17,7 @@ const hero = {
   image: new Image(),
 };
 
-hero.image.src = 'assets/hero.png'; // โหลดรูปจาก assets
+hero.image.src = 'assets/hero.png'; // โหลดรูป
 
 const keys = {};
 
@@ -38,4 +38,15 @@ function update() {
 
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.drawImage(he
+  ctx.drawImage(hero.image, hero.x, hero.y, hero.width, hero.height);
+}
+
+function gameLoop() {
+  update();
+  draw();
+  requestAnimationFrame(gameLoop);
+}
+
+hero.image.onload = () => {
+  gameLoop(); // เริ่มเมื่อโหลดภาพเสร็จ
+};
