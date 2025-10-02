@@ -2,12 +2,25 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RPG Portfolio</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portfolio Game</title>
+  <style>
+    body {
+      margin: 0;
+      background: #0f1126;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    canvas {
+      image-rendering: pixelated;
+      border: 2px solid #fff2;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    }
+  </style>
 </head>
 <body>
-  <canvas id="gameCanvas" width="640" height="480"></canvas>
   <script src="game.js"></script>
 </body>
 </html>
