@@ -59,7 +59,7 @@
   function openOverlay({title,url}){
     panelTitle.textContent = title || 'Portfolio';
     panelExternal.href = url;
-    panelFrame.src = url;              // ลองฝังใน iframe
+    panelFrame.src = url;              // ฝังใน iframe
     overlay.style.display = 'flex';
   }
   function closeOverlay(){ overlay.style.display='none'; panelFrame.src='about:blank'; }
@@ -78,11 +78,11 @@
     return m;
   }
 
-  // ===== Scene link targets (ของพี่เอง) =====
-  const PORT = "https://pakawatpe-hash.github.io/pakawat-portfolio/";        // หน้า Portfolio หลัก :contentReference[oaicite:2]{index=2}
-  const PORT_CONTACT = "https://pakawatpe-hash.github.io/pakawat-portfolio/#contact"; // หน้าติดต่อ :contentReference[oaicite:3]{index=3}
+  // ===== ลิงก์พอร์ตของพี่ =====
+  const PORT = "https://pakawatpe-hash.github.io/pakawat-portfolio/";
+  const PORT_CONTACT = "https://pakawatpe-hash.github.io/pakawat-portfolio/#contact";
 
-  // ===== 6 Scenes + link ของแต่ละฉาก =====
+  // ===== 6 Scenes + ลิงก์ของแต่ละฉาก =====
   const scenes = {
     town: {
       title: "Town (Home)",
@@ -94,39 +94,39 @@
     },
     projects: {
       title: "Projects",
-      info: "โปรเจกต์หลักของผม: Flutter • Python/Tkinter • Roblox • Web\nกด Enter เพื่อดูรายละเอียดในพอร์ต",
+      info: "โปรเจกต์หลัก: Flutter • Python/Tkinter • Roblox • Web\nกด Enter เพื่อดูรายละเอียดในพอร์ต",
       map: makeBasicMap(1),
       link: { title: "Portfolio — Projects", url: PORT+"#portfolio" },
-      npcs: [{ x:11*TILE, y:8*TILE, w:32, h:32, msg:"กด Enter เพื่อเปิด Projects ในแท็บพอร์ต" }],
+      npcs: [{ x:11*TILE, y:8*TILE, w:32, h:32, msg:"Projects — กด Enter เพื่อเปิด" }],
       exits: { right:"certificates", left:"town" }
     },
     certificates: {
       title: "Certificates",
-      info: "เกียรติบัตร/หลักสูตร/การแข่งขันที่เกี่ยวข้อง\nกด Enter เพื่อดูในพอร์ต",
+      info: "เกียรติบัตร/หลักสูตร/การแข่งขัน\nกด Enter เพื่อดูในพอร์ต",
       map: makeBasicMap(0),
       link: { title: "Portfolio — Certificates", url: PORT+"#certificates" },
-      npcs: [{ x:4*TILE, y:8*TILE, w:32, h:32, msg:"รวมใบประกาศ/รางวัล — เปิดด้วย Enter" }],
+      npcs: [{ x:4*TILE, y:8*TILE, w:32, h:32, msg:"Certificates — กด Enter เพื่อเปิด" }],
       exits: { right:"skills", left:"projects" }
     },
     skills: {
       title: "Skills",
-      info: "ทักษะ: JS/HTML/CSS, Python, Lua, Flutter, Compose, Canvas\nกด Enter เพื่ออ่านสรุปในพอร์ต",
+      info: "JS/HTML/CSS, Python, Lua, Flutter, Compose, Canvas\nกด Enter เพื่อดู Stack",
       map: makeBasicMap(1),
       link: { title: "Portfolio — Tech Stack", url: PORT+"#tech-stack" },
-      npcs: [{ x:14*TILE, y:8*TILE, w:32, h:32, msg:"Tech Stack & Tools" }],
+      npcs: [{ x:14*TILE, y:8*TILE, w:32, h:32, msg:"Skills — กด Enter เพื่อเปิด" }],
       exits: { right:"experience", left:"certificates" }
     },
     experience: {
       title: "Experience",
-      info: "ประสบการณ์จริงที่ได้ทำและได้เรียนรู้\nกด Enter เพื่อดูตัวอย่าง",
+      info: "ประสบการณ์จริงและสิ่งที่เรียนรู้\nกด Enter เพื่อดูตัวอย่าง",
       map: makeBasicMap(0),
       link: { title: "Portfolio — Experience", url: PORT+"#about" },
-      npcs: [{ x:8*TILE, y:8*TILE, w:32, h:32, msg:"ประสบการณ์/สิ่งที่เรียนรู้" }],
+      npcs: [{ x:8*TILE, y:8*TILE, w:32, h:32, msg:"Experience — กด Enter เพื่อเปิด" }],
       exits: { right:"contact", left:"skills" }
     },
     contact: {
       title: "Contact",
-      info: "ช่องทางติดต่อ — Email / GitHub / LINE\nกด Enter เพื่อไป Contact",
+      info: "ช่องทางติดต่อ: Email / GitHub / LINE\nกด Enter เพื่อไป Contact",
       map: makeBasicMap(1),
       link: { title: "Portfolio — Contact", url: PORT_CONTACT },
       npcs: [{ x:12*TILE, y:8*TILE, w:32, h:32, msg:"ขอบคุณครับ 🙏 กด Enter เพื่อเปิด Contact" }],
@@ -169,7 +169,7 @@
       else hero.y = canvas.height-hero.h;
     }
 
-    // talk (E) near npc — แค่บอกข้อความสั้น ๆ
+    // E = อ่านข้อความของฉาก (ใกล้ NPC)
     if (keys["KeyE"]) {
       for (const n of scenes[current].npcs) {
         const dist = Math.hypot((hero.x+hero.w/2)-(n.x+n.w/2),(hero.y+hero.h/2)-(n.y+n.h/2));
@@ -178,7 +178,7 @@
       keys["KeyE"]=false;
     }
 
-    // ENTER = เปิดพอร์ตของฉากใน overlay (หรือแท็บใหม่ถ้าฝังไม่ได้)
+    // Enter = เปิดพอร์ตของฉากใน overlay (หรือแท็บใหม่ถ้าฝังไม่ได้)
     if (keys["Enter"]) {
       const link = scenes[current].link;
       if (link?.url){
