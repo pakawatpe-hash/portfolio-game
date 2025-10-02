@@ -17,9 +17,7 @@
       image-rendering: pixelated;
       border: 2px solid #fff2;
       box-shadow: 0 8px 24px rgba(0,0,0,0.5);
-      background: transparent;
     }
-    /* กล่องข้อความคุยกับ NPC */
     #dialog {
       position: fixed;
       bottom: 40px;
@@ -56,6 +54,8 @@
   <div id="hint">WASD / Arrow = Move • E = Talk</div>
   <canvas id="game"></canvas>
   <div id="dialog"></div>
+
+  <!-- ใช้ defer ให้โหลดหลัง DOM เสร็จ -->
   <script src="game.js" defer></script>
 </body>
 </html>
