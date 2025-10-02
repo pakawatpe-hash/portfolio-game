@@ -2,51 +2,79 @@
 <html lang="th">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Portfolio Game</title>
   <style>
     :root { --bg:#0f1126; --ink:#e9eefc; }
     html, body {
-      height: 100%; margin: 0; background: var(--bg); color: var(--ink);
+      height:100%; margin:0; background:var(--bg); color:var(--ink);
       display:flex; align-items:center; justify-content:center;
       font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
     }
-    canvas {
-      image-rendering: pixelated;
-      border: 2px solid #fff2;
-      box-shadow: 0 8px 24px rgba(0,0,0,.5);
-      background: transparent;
-    }
-    #dialog {
-      position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%);
-      background: rgba(0,0,0,.85); color: #fff; font-family: monospace; font-size: 14px;
-      padding: 10px 14px; border: 2px solid #fff3; border-radius: 8px;
-      display: none; max-width: 80vw; white-space: pre-line; z-index: 10;
-    }
+    canvas { image-rendering: pixelated; border:2px solid #fff2; box-shadow:0 8px 24px rgba(0,0,0,.5); }
     #hint {
-      position: fixed; top: 12px; left: 50%; transform: translateX(-50%);
-      font-size: 13px; opacity: .85; background: rgba(0,0,0,.35);
-      padding: 6px 10px; border-radius: 10px; border:1px solid #fff3; z-index: 10;
+      position:fixed; top:12px; left:50%; transform:translateX(-50%);
+      font-size:13px; opacity:.85; background:rgba(0,0,0,.35);
+      padding:6px 10px; border-radius:10px; border:1px solid #fff3; z-index:10;
     }
     #banner {
-      position: fixed; top: 52px; left: 50%; transform: translateX(-50%);
-      padding: 6px 12px; border-radius: 10px; border:1px solid #fff2;
-      background: rgba(8,12,28,.6); backdrop-filter: blur(4px);
-      font-size: 14px; display:none; z-index: 10;
+      position:fixed; top:52px; left:50%; transform:translateX(-50%);
+      padding:6px 12px; border-radius:10px; border:1px solid #fff2;
+      background:rgba(8,12,28,.6); backdrop-filter: blur(4px);
+      font-size:14px; display:none; z-index:10;
     }
+    #dialog {
+      position:fixed; bottom:40px; left:50%; transform:translateX(-50%);
+      background:rgba(0,0,0,.85); color:#fff; font-family:monospace; font-size:14px;
+      padding:10px 14px; border:2px solid #fff3; border-radius:8px;
+      display:none; max-width:80vw; white-space:pre-line; z-index:10;
+    }
+    /* Overlay พอร์ต */
+    #overlay {
+      position:fixed; inset:0; background:rgba(0,0,0,.6);
+      display:none; align-items:center; justify-content:center; z-index:20;
+    }
+    #panel {
+      width:min(1024px, 92vw); height:min(640px, 80vh);
+      background:#0b1024; border:1px solid #3b4a79; border-radius:12px;
+      box-shadow:0 20px 50px rgba(0,0,0,.6); overflow:hidden;
+      display:flex; flex-direction:column;
+    }
+    #panelHeader {
+      display:flex; align-items:center; justify-content:space-between;
+      padding:8px 12px; background:#0e1533; border-bottom:1px solid #3b4a79;
+      font-size:14px;
+    }
+    #panelHeader a { color:#8fb3ff; text-decoration:none; }
+    #panelHeader a:hover { text-decoration:underline; }
+    #panel iframe { width:100%; height:100%; border:0; background:#fff; }
+    .btn {
+      appearance:none; border:1px solid #3b4a79; border-radius:8px; padding:6px 10px; cursor:pointer;
+      background:#11193b; color:#e9eefc; font-size:12px;
+    }
+    .btn:hover { background:#1a2554; }
   </style>
 </head>
 <body>
-  <!-- สิ่งที่ game.js ต้องอ้างถึง ต้องมาก่อนสคริปต์เสมอ -->
-  <div id="hint">WASD / Arrow = Move • E = Talk • เดินชนขอบเพื่อเปลี่ยนฉาก</div>
+  <div id="hint">WASD / Arrow = Move • E = Talk • Enter = เปิดพอร์ตของฉาก • ชนขอบเพื่อเปลี่ยนฉาก</div>
   <canvas id="game"></canvas>
   <div id="banner"></div>
   <div id="dialog"></div>
 
-  <!-- ให้ JS รันหลัง DOM พร้อม -->
-  <script src="game.js" defer></script>
+  <!-- Overlay แสดงพอร์ต -->
+  <div id="overlay">
+    <div id="panel">
+      <div id="panelHeader">
+        <span id="panelTitle">Portfolio</span>
+        <div style="display:flex; gap:8px;">
+          <a id="panelExternal" href="#" target="_blank" rel="noopener">เปิดแท็บใหม่</a>
+          <button id="panelClose" class="btn">ปิด</button>
+        </div>
+      </div>
+      <iframe id="panelFrame" src="about:blank" sandbox="allow-same-origin allow-scripts allow-forms allow-popups"></iframe>
+    </div>
+  </div>
 
-  <!-- กันพลาด: ถ้าโหลด game.js ไม่ได้จะแจ้งเตือน -->
-  <noscript>ต้องเปิดใช้งาน JavaScript</noscript>
+  <script src="game.js" defer></script>
 </body>
 </html>
