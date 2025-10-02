@@ -11,22 +11,6 @@ const TILE = 32;
 const COLS = canvas.width / TILE;
 const ROWS = canvas.height / TILE;
 
-// ===== Keys =====
-const keys = {};
-function setKey(e, isDown) {
-  const k = e.key;
-  // ปุ่มที่ใช้เดิน + กันสกรอลหน้า
-  const controlKeys = ['w','W','a','A','s','S','d','D','ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' '];
-  if (controlKeys.includes(k)) e.preventDefault();
-  keys[k] = isDown;
-}
-document.addEventListener('keydown', e => setKey(e, true), { passive:false });
-document.addEventListener('keyup',   e => setKey(e, false), { passive:false });
-
-// บางทีหน้าเว็บไม่ได้ focus → บังคับโฟกัส
-window.addEventListener('load', () => window.focus());
-document.addEventListener('click', () => window.focus());
-
 // ===== Hero =====
 const hero = {
   x: 300,
@@ -37,8 +21,20 @@ const hero = {
   img: new Image(),
   imgLoaded: false,
 };
-hero.img.onload = () => { hero.imgLoaded = true; };
-hero.img.src = "assets/hero.png"; // ถ้า path ผิด เกมก็ยังรันและวาดสี่เหลี่ยมแทน
+hero.img.onload = () => hero.imgLoaded = true;
+hero.img.src = "assets/hero.png";
+
+// ===== Keys (ใช้ event.code) =====
+const keys = {};
+function setKey(e, isDown) {
+  keys[e.code] = isDown;
+  // กันไม่ให้หน้าเว็บเลื่อน
+  if (["ArrowUp","ArrowDown","ArrowLeft","ArrowRight","Space","KeyW","KeyA","KeyS","KeyD"].includes(e.code)) {
+    e.preventDefault();
+  }
+}
+document.addEventListener("keydown", e => setKey(e, true), { passive:false });
+document.addEventListener("keyup",   e => setKey(e, false), { passive:false });
 
 // ===== Background Sky =====
 const sky = new Image();
@@ -63,7 +59,7 @@ for (let r = 0; r < ROWS; r++) {
   if (r < 8) {
     map[r] = Array(COLS).fill(0);   // sky
   } else if (r === 8) {
-    map[r] = Array(COLS).fill(1);   // grass
+    map[r] = Array(COLS).fill(1);   // grass line
   } else {
     map[r] = Array(COLS).fill(2);   // dirt
   }
@@ -75,17 +71,10 @@ function clamp(v, min, max){ return Math.max(min, Math.min(max, v)); }
 function update() {
   let dx = 0, dy = 0;
 
-  // WASD
-  if (keys['w'] || keys['W']) dy -= hero.speed;
-  if (keys['s'] || keys['S']) dy += hero.speed;
-  if (keys['a'] || keys['A']) dx -= hero.speed;
-  if (keys['d'] || keys['D']) dx += hero.speed;
-
-  // Arrow keys
-  if (keys['ArrowUp'])    dy -= hero.speed;
-  if (keys['ArrowDown'])  dy += hero.speed;
-  if (keys['ArrowLeft'])  dx -= hero.speed;
-  if (keys['ArrowRight']) dx += hero.speed;
+  if (keys["KeyW"] || keys["ArrowUp"])    dy -= hero.speed;
+  if (keys["KeyS"] || keys["ArrowDown"])  dy += hero.speed;
+  if (keys["KeyA"] || keys["ArrowLeft"])  dx -= hero.speed;
+  if (keys["KeyD"] || keys["ArrowRight"]) dx += hero.speed;
 
   hero.x = clamp(hero.x + dx, 0, canvas.width - hero.w);
   hero.y = clamp(hero.y + dy, 0, canvas.height - hero.h);
@@ -122,17 +111,15 @@ function draw() {
     ctx.imageSmoothingEnabled = false;
     ctx.drawImage(hero.img, hero.x, hero.y, hero.w, hero.h);
   } else {
-    // Fallback: กล่องสี่เหลี่ยมแทน hero
     ctx.fillStyle = "#fff";
     ctx.fillRect(hero.x, hero.y, hero.w, hero.h);
   }
 }
 
-// ===== Loop =====
+// ===== Game Loop =====
 function gameLoop() {
   update();
   draw();
   requestAnimationFrame(gameLoop);
 }
-// เริ่ม loop ทันที — ไม่ต้องรอรูปโหลด
 gameLoop();
