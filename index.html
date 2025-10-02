@@ -18,9 +18,26 @@
       border: 2px solid #fff2;
       box-shadow: 0 8px 24px rgba(0,0,0,0.5);
     }
+    /* กล่องข้อความ */
+    #dialog {
+      position: fixed;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.8);
+      color: #fff;
+      font-family: monospace;
+      font-size: 14px;
+      padding: 10px 14px;
+      border: 2px solid #fff3;
+      border-radius: 8px;
+      display: none;
+      max-width: 80vw;
+    }
   </style>
 </head>
 <body>
   <script src="game.js"></script>
+  <div id="dialog"></div>
 </body>
 </html>
