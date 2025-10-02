@@ -28,8 +28,7 @@ hero.img.src = "assets/hero.png";
 const keys = {};
 function setKey(e, isDown) {
   keys[e.code] = isDown;
-  // กันไม่ให้หน้าเว็บเลื่อน
-  if (["ArrowUp","ArrowDown","ArrowLeft","ArrowRight","Space","KeyW","KeyA","KeyS","KeyD"].includes(e.code)) {
+  if (["ArrowUp","ArrowDown","ArrowLeft","ArrowRight","Space","KeyW","KeyA","KeyS","KeyD","KeyE"].includes(e.code)) {
     e.preventDefault();
   }
 }
@@ -65,6 +64,26 @@ for (let r = 0; r < ROWS; r++) {
   }
 }
 
+// ===== NPC =====
+const npcs = [
+  {
+    x: 9 * TILE,
+    y: 8 * TILE - 28, // ยืนบนหญ้า
+    w: 28,
+    h: 28,
+    color: "#FFD166",
+    message: "สวัสดี! 👋 ผมคือ NPC Guide\nกด E เพื่อดูโปรเจกต์"
+  }
+];
+
+// ===== Dialog =====
+const dialogBox = document.getElementById("dialog");
+function showDialog(text) {
+  dialogBox.innerText = text;
+  dialogBox.style.display = "block";
+  setTimeout(()=> dialogBox.style.display = "none", 3000);
+}
+
 // ===== Update =====
 function clamp(v, min, max){ return Math.max(min, Math.min(max, v)); }
 
@@ -78,6 +97,17 @@ function update() {
 
   hero.x = clamp(hero.x + dx, 0, canvas.width - hero.w);
   hero.y = clamp(hero.y + dy, 0, canvas.height - hero.h);
+
+  // กด E → ตรวจว่าใกล้ NPC หรือไม่
+  if (keys["KeyE"]) {
+    for (const npc of npcs) {
+      const dist = Math.hypot((hero.x+hero.w/2)-(npc.x+npc.w/2), (hero.y+hero.h/2)-(npc.y+npc.h/2));
+      if (dist < 50) {
+        showDialog(npc.message);
+      }
+    }
+    keys["KeyE"] = false; // กันค้าง
+  }
 }
 
 // ===== Draw =====
@@ -113,6 +143,12 @@ function draw() {
   } else {
     ctx.fillStyle = "#fff";
     ctx.fillRect(hero.x, hero.y, hero.w, hero.h);
+  }
+
+  // NPC
+  for (const npc of npcs) {
+    ctx.fillStyle = npc.color;
+    ctx.fillRect(npc.x, npc.y, npc.w, npc.h);
   }
 }
 
