@@ -68,14 +68,13 @@ for (let r = 0; r < ROWS; r++) {
 const npcs = [
   {
     x: 9 * TILE,
-    y: 8 * TILE, // <<< แก้ตรงนี้ ไม่ลบออกไปแล้ว
+    y: 8 * TILE, // ยืนพอดีบนแถวหญ้า
     w: 28,
     h: 28,
     color: "#FFD166",
     message: "สวัสดี! 👋 ผมคือ NPC Guide\nกด E เพื่อดูโปรเจกต์"
   }
 ];
-
 
 // ===== Dialog =====
 const dialogBox = document.getElementById("dialog");
@@ -107,7 +106,7 @@ function update() {
         showDialog(npc.message);
       }
     }
-    keys["KeyE"] = false; // กันค้าง
+    keys["KeyE"] = false; // กันกดค้าง
   }
 }
 
