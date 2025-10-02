@@ -4,10 +4,10 @@
 
   // ===== Full HD Size =====
   const TILE = 32;
-  const COLS = 60; // 1920 / 32
-  const ROWS = 33; // 1080 / 32 ~ 33
+  const COLS = 60; 
+  const ROWS = 33; 
   canvas.width  = COLS * TILE;   // 1920
-  canvas.height = ROWS * TILE;   // 1056 (พอดีกับ 33 tile)
+  canvas.height = ROWS * TILE;   // 1056
 
   // ===== Keys =====
   const keys = {};
@@ -39,7 +39,7 @@
   tileImages.grass.src = "assets/tiles/grass.png";
   tileImages.dirt.src  = "assets/tiles/dirt.png";
 
-  // ===== Map: sky(0) / grass(1) / dirt(2) =====
+  // ===== Map =====
   const map = [];
   for (let r = 0; r < ROWS; r++) {
     if (r < 16) map[r] = Array(COLS).fill(0);       // sky
@@ -47,10 +47,20 @@
     else map[r] = Array(COLS).fill(2);              // dirt
   }
 
-  // ===== NPC =====
+  // ===== NPC (ใช้ tile_0000.png) =====
   const npcs = [
-    { x: 28 * TILE, y: 16 * TILE, w: 28, h: 28, color: "#FFD166", message: "สวัสดี! 👋\nผมคือ NPC Guide\nกด E เพื่อดูโปรเจกต์" }
+    {
+      x: 28 * TILE,
+      y: 16 * TILE,
+      w: 32,
+      h: 32,
+      img: new Image(),
+      imgLoaded: false,
+      message: "สวัสดี! 👋\nผมคือ NPC Guide\nกด E เพื่อดูโปรเจกต์"
+    }
   ];
+  npcs[0].img.onload = () => npcs[0].imgLoaded = true;
+  npcs[0].img.src = "assets/tiles/tile_0000.png"; // ✅ ใช้ sprite แทนกล่อง
 
   // ===== Dialog =====
   const dialogBox = document.getElementById("dialog");
@@ -115,8 +125,13 @@
     }
 
     for (const npc of npcs) {
-      ctx.fillStyle = npc.color;
-      ctx.fillRect(npc.x, npc.y, npc.w, npc.h);
+      if (npc.imgLoaded) {
+        ctx.imageSmoothingEnabled = false;
+        ctx.drawImage(npc.img, npc.x, npc.y, npc.w, npc.h);
+      } else {
+        ctx.fillStyle = "#FFD166";
+        ctx.fillRect(npc.x, npc.y, npc.w, npc.h);
+      }
     }
   }
 
