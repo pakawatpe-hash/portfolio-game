@@ -17,8 +17,9 @@
       image-rendering: pixelated;
       border: 2px solid #fff2;
       box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+      background: transparent;
     }
-    /* กล่องข้อความ */
+    /* กล่องข้อความคุยกับ NPC */
     #dialog {
       position: fixed;
       bottom: 40px;
@@ -27,18 +28,34 @@
       background: rgba(0,0,0,0.8);
       color: #fff;
       font-family: monospace;
-      font-size: 14px;
-      padding: 10px 14px;
+      font-size: 16px;
+      padding: 12px 16px;
       border: 2px solid #fff3;
       border-radius: 8px;
       display: none;
       max-width: 80vw;
       white-space: pre-line;
+      z-index: 10;
+    }
+    #hint {
+      position: fixed;
+      top: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 14px;
+      opacity: .85;
+      background: rgba(0,0,0,.35);
+      padding: 6px 12px;
+      border-radius: 10px;
+      border:1px solid rgba(255,255,255,.15);
+      z-index: 10;
     }
   </style>
 </head>
 <body>
-  <script src="game.js"></script>
+  <div id="hint">WASD / Arrow = Move • E = Talk</div>
+  <canvas id="game"></canvas>
   <div id="dialog"></div>
+  <script src="game.js" defer></script>
 </body>
 </html>
