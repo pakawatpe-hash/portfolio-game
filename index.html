@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -37,10 +37,16 @@
   </style>
 </head>
 <body>
+  <!-- สิ่งที่ game.js ต้องอ้างถึง ต้องมาก่อนสคริปต์เสมอ -->
   <div id="hint">WASD / Arrow = Move • E = Talk • เดินชนขอบเพื่อเปลี่ยนฉาก</div>
   <canvas id="game"></canvas>
   <div id="banner"></div>
   <div id="dialog"></div>
+
+  <!-- ให้ JS รันหลัง DOM พร้อม -->
   <script src="game.js" defer></script>
+
+  <!-- กันพลาด: ถ้าโหลด game.js ไม่ได้จะแจ้งเตือน -->
+  <noscript>ต้องเปิดใช้งาน JavaScript</noscript>
 </body>
 </html>
