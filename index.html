@@ -5,58 +5,42 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Portfolio Game</title>
   <style>
-    body {
-      margin: 0;
-      background: #0f1126;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+    :root { --bg:#0f1126; --ink:#e9eefc; }
+    html, body {
+      height: 100%; margin: 0; background: var(--bg); color: var(--ink);
+      display:flex; align-items:center; justify-content:center;
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
     }
     canvas {
       image-rendering: pixelated;
       border: 2px solid #fff2;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+      box-shadow: 0 8px 24px rgba(0,0,0,.5);
+      background: transparent;
     }
     #dialog {
-      position: fixed;
-      bottom: 40px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(0,0,0,0.8);
-      color: #fff;
-      font-family: monospace;
-      font-size: 14px;
-      padding: 10px 14px;
-      border: 2px solid #fff3;
-      border-radius: 8px;
-      display: none;
-      max-width: 80vw;
-      white-space: pre-line;
-      z-index: 10;
+      position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%);
+      background: rgba(0,0,0,.85); color: #fff; font-family: monospace; font-size: 14px;
+      padding: 10px 14px; border: 2px solid #fff3; border-radius: 8px;
+      display: none; max-width: 80vw; white-space: pre-line; z-index: 10;
     }
     #hint {
-      position: fixed;
-      top: 12px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 13px;
-      opacity: .8;
-      background: rgba(0,0,0,.35);
-      padding: 6px 10px;
-      border-radius: 10px;
-      border:1px solid rgba(255,255,255,.15);
-      z-index: 10;
+      position: fixed; top: 12px; left: 50%; transform: translateX(-50%);
+      font-size: 13px; opacity: .85; background: rgba(0,0,0,.35);
+      padding: 6px 10px; border-radius: 10px; border:1px solid #fff3; z-index: 10;
+    }
+    #banner {
+      position: fixed; top: 52px; left: 50%; transform: translateX(-50%);
+      padding: 6px 12px; border-radius: 10px; border:1px solid #fff2;
+      background: rgba(8,12,28,.6); backdrop-filter: blur(4px);
+      font-size: 14px; display:none; z-index: 10;
     }
   </style>
 </head>
 <body>
-  <!-- สิ่งที่ game.js จะใช้ -->
-  <div id="hint">WASD / Arrow = Move • E = Talk</div>
+  <div id="hint">WASD / Arrow = Move • E = Talk • เดินชนขอบเพื่อเปลี่ยนฉาก</div>
   <canvas id="game"></canvas>
+  <div id="banner"></div>
   <div id="dialog"></div>
-
-  <!-- โหลดสคริปต์หลัง DOM พร้อม -->
   <script src="game.js" defer></script>
 </body>
 </html>
